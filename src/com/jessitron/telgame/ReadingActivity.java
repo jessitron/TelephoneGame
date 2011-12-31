@@ -13,22 +13,21 @@ import android.widget.Toast;
 
 public class ReadingActivity extends Activity {
     private String prompt;
-    private int gameId;
+    private long gameId;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reading);
 
-        prompt = getIntent().getStringExtra(Intent.EXTRA_TEXT);
-        gameId = getIntent().getIntExtra(TelephoneGame.EXTRA_GAME_ID, -1);
+        setPrompt(getIntent().getStringExtra(Intent.EXTRA_TEXT));
+        gameId = getIntent().getLongExtra(TelephoneGameActivity.EXTRA_GAME_ID, -1);
         validateInput();
-
-        setPrompt(prompt);
 
     }
 
-    private void setPrompt(String prompt) {
-        ((TextView) findViewById(R.id.readThis)).setText(prompt);
+    private void setPrompt(String input) {
+        prompt = input;
+        ((TextView) findViewById(R.id.readThis)).setText(input);
     }
 
     private void validateInput() {
@@ -60,7 +59,7 @@ public class ReadingActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case 4:
-                Log.d(TelephoneGame.LOG_PREFIX, "result code: " + resultCode);
+                Log.d(TelephoneGameActivity.LOG_PREFIX, "result code: " + resultCode);
                 if (resultCode == RESULT_OK) {
                     dealWithResult(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS));
                 } else {
@@ -73,16 +72,24 @@ public class ReadingActivity extends Activity {
     }
 
     private void dealWithResult(ArrayList<String> resultList) {
-
-        for (String s : resultList) {
-            Log.d(TelephoneGame.LOG_PREFIX, "Result: " + s);
-        }
         if (resultList.size() == 0) {
              toast("Nothing in results!");
         }  else {
             // TODO: store the Reading
-            setPrompt(resultList.get(0));
+            setPrompt(selectResult(resultList));
         }
+    }
+
+    private String selectResult(ArrayList<String> resultList) {
+        // man, I wish I was in a functional language right about now.
+        String longestResult = "";
+        for (String s : resultList) {
+            Log.d(TelephoneGameActivity.LOG_PREFIX, "Result: " + s);
+            if (s.length() > longestResult.length()) {
+                longestResult = s;
+            }
+        }
+        return longestResult;
     }
 
     private void dealWithFailure() {
