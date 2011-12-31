@@ -2,6 +2,7 @@ package com.jessitron.telgame.database;
 
 import com.jessitron.telgame.TelephoneGameActivity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -20,13 +21,22 @@ public class GameTable {
                 " " + ENDING_TEXT + " text )");
     }
     
-    public static long insertNewGame(SQLiteDatabase db, String startingText) {
-        ContentValues cv = new ContentValues();
-        cv.put(STARTING_TEXT, startingText);
+    public static long insertNewGame(String startingText, Context context) {
+        // This should happen on an asynchronous task
 
-        long id = db.insert(TABLE_NAME, null, cv);
+        final TelephoneGameOpenHelper openHelper = new TelephoneGameOpenHelper(context);
 
-        Log.d(TelephoneGameActivity.LOG_PREFIX, "Created new game with ID: " + id);
+        long id;
+        try {
+            ContentValues cv = new ContentValues();
+            cv.put(STARTING_TEXT, startingText);
+
+            id = openHelper.getWritableDatabase().insert(TABLE_NAME, null, cv);
+
+            Log.d(TelephoneGameActivity.LOG_PREFIX, "Created new game with ID: " + id);
+        } finally {
+            openHelper.close();
+        }
 
         return id;
     }

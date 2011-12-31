@@ -1,10 +1,11 @@
 package com.jessitron.telgame.database;
 
+import static com.jessitron.telgame.TelephoneGameActivity.LOG_PREFIX;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
-import com.jessitron.telgame.TelephoneGameActivity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -29,7 +30,7 @@ public class TelephoneGameOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-       // nothing yet.
+        // nothing yet.
     }
 
     public void backupToSDCard() {
@@ -43,12 +44,13 @@ public class TelephoneGameOpenHelper extends SQLiteOpenHelper {
             String backupDBPath = DATABASE_NAME;
             File currentDB = new File(data, currentDBPath);
             File backupDB = new File(sd, backupDBPath);
-            Log.i(TelephoneGameActivity.LOG_PREFIX, "Backing up database to: " + backupDB.getAbsolutePath());
+            Log.i(LOG_PREFIX, "Backing up database to: " + backupDB.getAbsolutePath());
 
             if (currentDB.exists()) {
                 if (backupDB.exists()) {
-                    Log.d(TelephoneGameActivity.LOG_PREFIX, "Deleting old backup");
+                    Log.d(LOG_PREFIX, "Deleting old backup");
                     backupDB.delete();
+                    backupDB =  new File(sd, backupDBPath);
                 }
                 FileChannel src = null;
                 FileChannel dst = null;
@@ -65,10 +67,13 @@ public class TelephoneGameOpenHelper extends SQLiteOpenHelper {
                     } catch (Exception e) {
                     }
                 }
-                Toast.makeText(context, "Successfully backed up to " + backupDB.getAbsolutePath(), Toast.LENGTH_LONG);
-            }  else {
-                Log.e("Unable to find current database at: " , currentDB.getAbsolutePath());
+                Toast.makeText(context, "Successfully backed up to " + backupDB.getAbsolutePath(), Toast.LENGTH_LONG).show();    // TODO: doesn't work
+            } else {
+                Log.e(LOG_PREFIX, "Unable to find current database at: "+ currentDB.getAbsolutePath());
             }
+        } else {
+            Log.e(LOG_PREFIX, "Unable to back up - card not available")  ;
+            Toast.makeText(context, "SD card not available", Toast.LENGTH_LONG).show();
         }
     }
 }

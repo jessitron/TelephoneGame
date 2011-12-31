@@ -4,7 +4,6 @@ import com.jessitron.telgame.database.GameTable;
 import com.jessitron.telgame.database.TelephoneGameOpenHelper;
 import android.app.Activity;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -35,7 +34,7 @@ public class TelephoneGameActivity extends Activity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.backupMenuItem:
-                new TelephoneGameOpenHelper(this).backupToSDCard();
+                new TelephoneGameOpenHelper(this).backupToSDCard();  // TODO: don't instantiate. Make it static
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -46,7 +45,7 @@ public class TelephoneGameActivity extends Activity
         // TODO: validate the starting text
          // create a game
         final String startingText = getStartingText();
-        long gameId = GameTable.insertNewGame(getDb(), startingText);
+        long gameId = GameTable.insertNewGame(startingText, this);
         Log.d(LOG_PREFIX, "Starting new game with <" + startingText + ">");
         
         // start the reading activity with the starting text.
@@ -56,9 +55,6 @@ public class TelephoneGameActivity extends Activity
         startActivity(readingIntent);
     }
 
-    private SQLiteDatabase getDb() {
-        return new TelephoneGameOpenHelper(this).getWritableDatabase();
-    }
 
     public String getStartingText() {
         return ((TextView) findViewById(R.id.startingText)).getText().toString();
