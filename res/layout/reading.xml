@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:paddingLeft="10px"
+              android:paddingRight="10px">
+    <TextView
+            android:paddingTop="30px"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Push the button and then read the sentence below to the device."
+            />
+
+    <TextView
+            android:paddingTop="30px"
+            android:paddingBottom="30px"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Read this."
+            android:id="@+id/readThis"
+            />
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Go"
+            android:id="@+id/goButton"
+            android:onClick="go"
+            />
+
+</LinearLayout>
