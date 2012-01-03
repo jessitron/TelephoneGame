@@ -13,6 +13,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ReadingActivity" android:label="Your turn to read"/>
+        <activity android:name=".ViewGamesActivity" android:label="Past games"/>
+        <activity android:name=".GameDetailActivity"/>
     </application>
     <supports-screens android:largeScreens="true" android:xlargeScreens="true" />
 </manifest> 

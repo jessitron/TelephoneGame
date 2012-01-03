@@ -1,6 +1,7 @@
 package com.jessitron.telgame;
 
 import java.util.ArrayList;
+import com.jessitron.telgame.database.ReadingTable;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -75,8 +76,9 @@ public class ReadingActivity extends Activity {
         if (resultList.size() == 0) {
              toast("Nothing in results!");
         }  else {
-            // TODO: store the Reading
-            setPrompt(selectResult(resultList));
+            final String result = selectResult(resultList);
+            ReadingTable.insertNewReading(gameId, prompt, result, this);  // TODO: move to async task
+            setPrompt(result);
         }
     }
 

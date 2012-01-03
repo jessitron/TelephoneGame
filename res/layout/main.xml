@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:text="View prior games"
             android:id="@+id/priorGames"
+            android:onClick="viewPastGames"
             />
 </LinearLayout>
 

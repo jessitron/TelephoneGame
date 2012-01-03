@@ -59,5 +59,9 @@ public class TelephoneGameActivity extends Activity
     public String getStartingText() {
         return ((TextView) findViewById(R.id.startingText)).getText().toString();
     }
+    
+    public void viewPastGames(View v) {
+        startActivity(new Intent(this, ViewGamesActivity.class));
+    }
 
 }

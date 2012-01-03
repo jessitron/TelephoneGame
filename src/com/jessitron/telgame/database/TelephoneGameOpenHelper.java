@@ -26,6 +26,7 @@ public class TelephoneGameOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         GameTable.onCreate(sqLiteDatabase);
+        ReadingTable.onCreate(sqLiteDatabase);
     }
 
     @Override
