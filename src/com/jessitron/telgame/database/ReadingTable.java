@@ -3,6 +3,7 @@ package com.jessitron.telgame.database;
 import com.jessitron.telgame.TelephoneGameActivity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -19,7 +20,7 @@ public class ReadingTable {
         db.execSQL("create table " + TABLE_NAME + " ( " + ID + " integer primary key autoincrement , " +
                 GAME_ID + " integer not null, " +    // TODO: foreign key
                 COMPLETE_TIMESTAMP + " text default current_timestamp , " +
-              STARTING_TEXT + " text not null ," +
+                STARTING_TEXT + " text not null ," +
                 ENDING_TEXT + " text not null)");
     }
 
@@ -43,5 +44,9 @@ public class ReadingTable {
         }
 
         return id;
+    }
+
+    public static Cursor findReadingsForGame(long gameId, SQLiteDatabase db) {
+        return db.query(TABLE_NAME, new String[]{ID, ENDING_TEXT}, GAME_ID + " = :id", new String[]{"" + gameId}, null, null, ID + " asc");
     }
 }

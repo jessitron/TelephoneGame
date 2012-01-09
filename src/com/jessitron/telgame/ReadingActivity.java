@@ -15,10 +15,18 @@ import android.widget.Toast;
 public class ReadingActivity extends Activity {
     private String prompt;
     private long gameId;
+    private TextView promptView ;
+    private TextView instructionView;
+    
+    private int sameCount = 0;
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reading);
+
+        promptView = ((TextView) findViewById(R.id.readThis));
+        instructionView = ((TextView) findViewById(R.id.instructions));
 
         setPrompt(getIntent().getStringExtra(Intent.EXTRA_TEXT));
         gameId = getIntent().getLongExtra(TelephoneGameActivity.EXTRA_GAME_ID, -1);
@@ -28,7 +36,19 @@ public class ReadingActivity extends Activity {
 
     private void setPrompt(String input) {
         prompt = input;
-        ((TextView) findViewById(R.id.readThis)).setText(input);
+        adjustInstruction(input);
+        promptView.setText(input);
+    }
+
+    private void adjustInstruction(String input) {
+       String instructions = "Push the button and then read the text to the device.";
+        if (input.length() < 10  || !input.contains(" "))     {
+            instructions += " (Please embellish.)";
+        }
+        if (sameCount > 1)  {
+            instructions += " Use a funny accent.";
+        }
+       instructionView.setText(instructions);
     }
 
     private void validateInput() {
@@ -77,9 +97,17 @@ public class ReadingActivity extends Activity {
              toast("Nothing in results!");
         }  else {
             final String result = selectResult(resultList);
+            measureSameness(prompt, result);
             ReadingTable.insertNewReading(gameId, prompt, result, this);  // TODO: move to async task
             setPrompt(result);
         }
+    }
+
+    private void measureSameness(String prompt, String result) {
+        if (prompt.equals(result)) {
+            sameCount++;
+        }
+        else sameCount = 0;
     }
 
     private String selectResult(ArrayList<String> resultList) {

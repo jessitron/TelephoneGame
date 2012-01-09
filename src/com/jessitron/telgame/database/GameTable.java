@@ -22,18 +22,24 @@ public class GameTable {
                 " " + STARTING_TEXT + " text not null ," +
                 " " + ENDING_TEXT + " text )");
     }
-    
+
     public static long insertNewGame(String startingText, Context context) {
-        // This should happen on an asynchronous task
 
         final TelephoneGameOpenHelper openHelper = new TelephoneGameOpenHelper(context);
 
-        long id;                                  // todo: transactions
+        long id;
         try {
             ContentValues cv = new ContentValues();
             cv.put(STARTING_TEXT, startingText);
 
-            id = openHelper.getWritableDatabase().insert(TABLE_NAME, null, cv);
+            final SQLiteDatabase db = openHelper.getWritableDatabase();
+            db.beginTransaction();
+            try {
+                id = db.insert(TABLE_NAME, null, cv);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
 
             Log.d(TelephoneGameActivity.LOG_PREFIX, "Created new game with ID: " + id);
         } finally {
@@ -42,18 +48,18 @@ public class GameTable {
 
         return id;
     }
-    
+
     public static Cursor listGames(SQLiteDatabase db) {
 
         final String sql = "select " + "g." + ID + ", g." + START_TIMESTAMP + ", g." + STARTING_TEXT + "" + ", r2.ending_text, " + READING_COUNT +
                 " from " + TABLE_NAME + " g join (select " + ReadingTable.GAME_ID + ", count(_id) " + READING_COUNT +
-                " , max(_id) maxid " +
+                " , max(" + ReadingTable.ID + ") maxid " +
                 " from " + ReadingTable.TABLE_NAME + " r group by game_id) r " +
                 " on r." + ReadingTable.GAME_ID + " = " + " g." + ID +
-                " join reading r2 on r2.game_id = g._id "+
-               " order by g." + START_TIMESTAMP + " desc";
+                " join " + ReadingTable.TABLE_NAME + " r2 on r2." + ReadingTable.ID + " = r.maxid " +
+                " order by g." + START_TIMESTAMP + " desc";
         Log.d(TelephoneGameActivity.LOG_PREFIX, "Reading games: " + sql);
-        Cursor c = db.rawQuery(sql, null) ;
+        Cursor c = db.rawQuery(sql, null);
         return c;
     }
 }

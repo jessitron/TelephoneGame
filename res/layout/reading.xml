@@ -7,6 +7,7 @@
               android:paddingLeft="10px"
               android:paddingRight="10px">
     <TextView
+            android:id="@+id/instructions"
             android:paddingTop="30px"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
