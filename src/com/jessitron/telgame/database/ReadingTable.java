@@ -18,7 +18,7 @@ public class ReadingTable {
 
     public static void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_NAME + " ( " + ID + " integer primary key autoincrement , " +
-                GAME_ID + " integer not null, " +    // TODO: foreign key
+                GAME_ID + " integer not null references " + GameTable.TABLE_NAME + " ( " + GameTable.ID + " ) , " +
                 COMPLETE_TIMESTAMP + " text default current_timestamp , " +
                 STARTING_TEXT + " text not null ," +
                 ENDING_TEXT + " text not null)");

@@ -12,7 +12,8 @@ public class GameDetailActivity extends ListActivity {
         super.onCreate(savedInstanceState);
 
         final TelephoneGameOpenHelper openHelper = new TelephoneGameOpenHelper(this);
-        Cursor c = ReadingTable.findReadingsForGame(getIntent().getLongExtra(TelephoneGameActivity.EXTRA_GAME_ID, -1), openHelper.getReadableDatabase());
+        final long gameId = getIntent().getLongExtra(TelephoneGameActivity.EXTRA_GAME_ID, -1);
+        Cursor c = ReadingTable.findReadingsForGame(gameId, openHelper.getReadableDatabase());
         startManagingCursor(c);
         
         setListAdapter(new SimpleCursorAdapter(this, R.layout.reading_row, c, new String[] { ReadingTable.ENDING_TEXT}, new int[] {R.id.endingText2}));

@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
+import com.jessitron.telgame.TelephoneGameActivity;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
@@ -32,6 +34,23 @@ public class TelephoneGameOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         // nothing yet.
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        logDatabaseVersion(db);
+        if (!db.isReadOnly()) {
+            db.execSQL("PRAGMA foreign_keys = ON");   // this is the do-things-right flag for foreign keys
+        }
+    }
+
+    private void logDatabaseVersion(SQLiteDatabase db) {
+        final Cursor cursor = db.rawQuery("select sqlite_version()", null);
+        if (cursor.moveToFirst())  {
+            Log.d(TelephoneGameActivity.LOG_PREFIX, "SQLite version: " + cursor.getString(0));
+        }
+        cursor.close();
     }
 
     public void backupToSDCard() {
