@@ -47,6 +47,12 @@ public class ReadingTable {
     }
 
     public static Cursor findReadingsForGame(long gameId, SQLiteDatabase db) {
-        return db.query(TABLE_NAME, new String[]{ID, ENDING_TEXT}, GAME_ID + " = :id", new String[]{"" + gameId}, null, null, ID + " asc");
+        return db.query(TABLE_NAME,
+                new String[]{ID, ENDING_TEXT},
+                GAME_ID + " = :id",
+                new String[]{"" + gameId},
+                null,
+                null,
+                ID + " asc");
     }
 }
