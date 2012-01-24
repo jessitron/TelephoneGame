@@ -14,16 +14,15 @@ public final class R {
         public static final int whispericon=0x7f020000;
     }
     public static final class id {
-        public static final int backupMenuItem=0x7f06000b;
+        public static final int backupMenuItem=0x7f06000a;
         public static final int datetime=0x7f060000;
-        public static final int desc=0x7f060009;
+        public static final int desc=0x7f060008;
         public static final int endingText=0x7f060002;
-        public static final int endingText2=0x7f06000a;
-        public static final int goButton=0x7f060008;
+        public static final int endingText2=0x7f060009;
+        public static final int goButton=0x7f060007;
         public static final int instructions=0x7f060006;
         public static final int numberOfReadings=0x7f060003;
         public static final int priorGames=0x7f060005;
-        public static final int readThis=0x7f060007;
         public static final int startButton=0x7f060004;
         public static final int startingText=0x7f060001;
     }

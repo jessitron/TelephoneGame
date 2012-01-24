@@ -48,6 +48,16 @@ public class GameTable {
 
         return id;
     }
+    
+
+    public static GameInfo retrieveGameInfo(long gameId, SQLiteDatabase db) {
+        final Cursor cursor = db.query(TABLE_NAME, new String[] {ID, START_TIMESTAMP, STARTING_TEXT}, 
+                ID + " = :id", new String[] {"" + gameId}, null, null, null);
+        if (!cursor.moveToFirst())  {
+            throw new IllegalArgumentException("Unable to retrieve info for game " + gameId);
+        }
+        return new GameInfo(cursor.getLong(0), cursor.getString(1), cursor.getString(2));
+    }
 
     public static Cursor listGames(SQLiteDatabase db) {
 
@@ -61,5 +71,29 @@ public class GameTable {
         Log.d(TelephoneGameActivity.LOG_PREFIX, "Reading games: " + sql);
         Cursor c = db.rawQuery(sql, null);
         return c;
+    }
+
+    public static class GameInfo {
+        private final String startTimestamp;
+        private final String startingText;
+        private final long gameId;
+
+        private GameInfo(long gameId,  String startTimestamp, String startingText) {
+            this.gameId = gameId;
+            this.startingText = startingText;
+            this.startTimestamp = startTimestamp;
+        }
+
+        public String getStartTimestamp() {
+            return startTimestamp;
+        }
+
+        public String getStartingText() {
+            return startingText;
+        }
+
+        public long getGameId() {
+            return gameId;
+        }
     }
 }

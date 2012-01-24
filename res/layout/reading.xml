@@ -11,24 +11,27 @@
             android:paddingTop="30px"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="30sp"
             android:text="Push the button and then read the sentence below to the device."
             />
 
-    <TextView
-            android:paddingTop="30px"
-            android:paddingBottom="30px"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Read this."
-            android:id="@+id/readThis"
-            />
+
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Go"
             android:id="@+id/goButton"
             android:onClick="go"
+            />
+
+
+    <Button android:onClick="endGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:text="End Game"
+            android:id="@+id/goButton"
             />
 
 </LinearLayout>

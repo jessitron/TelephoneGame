@@ -25,7 +25,6 @@ public class ReadingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reading);
 
-        promptView = ((TextView) findViewById(R.id.readThis));
         instructionView = ((TextView) findViewById(R.id.instructions));
 
         setPrompt(getIntent().getStringExtra(Intent.EXTRA_TEXT));
@@ -37,7 +36,6 @@ public class ReadingActivity extends Activity {
     private void setPrompt(String input) {
         prompt = input;
         adjustInstruction(input);
-        promptView.setText(input);
     }
 
     private void adjustInstruction(String input) {
@@ -70,6 +68,15 @@ public class ReadingActivity extends Activity {
         } catch (ActivityNotFoundException e) {
             toast("Your device does not support speech recognition. Poop'n'scoop.");
         }
+    }
+    
+    public void endGame(View v) {
+        Intent intent = new Intent(this, ReadingListActivity.class);
+        intent.putExtra(TelephoneGameActivity.EXTRA_GAME_ID, gameId);
+
+        startActivity(intent);
+        
+        finish();
     }
 
     private void toast(String text) {

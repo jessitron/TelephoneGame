@@ -82,15 +82,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TelephoneGameOpenHelper.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/database/TelephoneGameOpenHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="26" selection-start="1028" selection-end="1028" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="TelephoneGameActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/TelephoneGameActivity.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -100,19 +91,50 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameDetailActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/GameDetailActivity.java">
+      <file leaf-file-name="ReadingListActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/ReadingListActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="128" selection-start="390" selection-end="390" vertical-scroll-proportion="0.0">
+            <state line="48" column="129" selection-start="1693" selection-end="1693" vertical-scroll-proportion="0.57908165">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Reading.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/model/Reading.java">
+      <file leaf-file-name="ReadingActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/ReadingActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="13" selection-start="51" selection-end="51" vertical-scroll-proportion="0.06944445">
+            <state line="71" column="36" selection-start="2340" selection-end="2340" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="reading.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/reading.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="23" column="30" selection-start="888" selection-end="888" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameTable.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/database/GameTable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="58" column="86" selection-start="2294" selection-end="2294" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="method#getStartTimestamp#0;class#GameInfo#0;class#GameTable#0" expanded="true" />
+                <element signature="method#getStartingText#0;class#GameInfo#0;class#GameTable#0" expanded="true" />
+                <element signature="method#getGameId#0;class#GameInfo#0;class#GameTable#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReadingTable.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/database/ReadingTable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="48" column="24" selection-start="1857" selection-end="1863" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -121,7 +143,7 @@
       <file leaf-file-name="ViewGamesActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/ViewGamesActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="76" selection-start="1528" selection-end="1530" vertical-scroll-proportion="0.0">
+            <state line="35" column="0" selection-start="1220" selection-end="1220" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -169,22 +191,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/com/jessitron/telgame/TelephoneGame.java" />
         <option value="$PROJECT_DIR$/src/com/jessitron/telgame/database/OpenHelper.java" />
         <option value="$PROJECT_DIR$/res/menu/menu.xml" />
         <option value="$PROJECT_DIR$/res/layout/main.xml" />
         <option value="$PROJECT_DIR$/res/layout/game_row.xml" />
         <option value="$PROJECT_DIR$/src/com/jessitron/telgame/TelephoneGameActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/jessitron/telgame/ViewGamesActivity.java" />
-        <option value="$PROJECT_DIR$/res/layout/reading.xml" />
-        <option value="$PROJECT_DIR$/src/com/jessitron/telgame/ReadingActivity.java" />
-        <option value="$PROJECT_DIR$/src/com/jessitron/telgame/database/GameTable.java" />
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/com/jessitron/telgame/database/TelephoneGameOpenHelper.java" />
         <option value="$PROJECT_DIR$/src/com/jessitron/telgame/database/ReadingTable.java" />
         <option value="$PROJECT_DIR$/res/layout/reading_row.xml" />
         <option value="$PROJECT_DIR$/res/layout/reading_list.xml" />
         <option value="$PROJECT_DIR$/src/com/jessitron/telgame/GameDetailActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/jessitron/telgame/database/GameTable.java" />
+        <option value="$PROJECT_DIR$/res/layout/reading.xml" />
+        <option value="$PROJECT_DIR$/src/com/jessitron/telgame/ViewGamesActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/jessitron/telgame/ReadingActivity.java" />
+        <option value="$PROJECT_DIR$/src/com/jessitron/telgame/ReadingListActivity.java" />
       </list>
     </option>
   </component>
@@ -260,28 +282,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="telgame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TelephoneGame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="TelephoneGame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="telgame" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -384,6 +384,9 @@
     <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
     <key name="IntroduceConstantDialog.RECENTS_KEY">
       <recent name="com.jessitron.telgame.database.GameTable" />
     </key>
@@ -584,23 +587,23 @@
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32989064" sideWeight="0.64547676" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32970768" sideWeight="0.67895365" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32970768" sideWeight="0.64662755" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32844576" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35452324" sideWeight="0.0" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35337242" sideWeight="0.0" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885087" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997281" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24949014" sideWeight="0.64547676" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32697946" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3997281" sideWeight="0.64662755" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24949014" sideWeight="0.64662755" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3240469" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Android Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885087" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885087" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -662,24 +665,9 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///usr/local/android-sdk-macosx/platforms/android-10/android.jar!/android/database/sqlite/SQLiteOpenHelper.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="63" selection-start="560" selection-end="560" vertical-scroll-proportion="0.31073445" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/reading.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="89" selection-start="558" selection-end="621" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="35" column="37" selection-start="1280" selection-end="1280" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/ReadingActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="45" selection-start="1614" selection-end="1614" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
@@ -697,33 +685,9 @@
         <state line="30" column="26" selection-start="1028" selection-end="1028" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/TelephoneGameActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="67" selection-start="632" selection-end="632" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/game_row.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="10" selection-start="123" selection-end="123" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/database/ReadingTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="24" selection-start="1857" selection-end="1863" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/ViewGamesActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="76" selection-start="1528" selection-end="1530" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/database/GameTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="28" selection-start="1756" selection-end="1761" vertical-scroll-proportion="0.38388625">
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/reading_row.xml">
@@ -740,16 +704,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/GameDetailActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/database/ReadingTable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="128" selection-start="390" selection-end="390" vertical-scroll-proportion="0.0">
+        <state line="48" column="24" selection-start="1857" selection-end="1863" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/database/GameTable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="86" selection-start="2294" selection-end="2294" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="method#getStartTimestamp#0;class#GameInfo#0;class#GameTable#0" expanded="true" />
+            <element signature="method#getStartingText#0;class#GameInfo#0;class#GameTable#0" expanded="true" />
+            <element signature="method#getGameId#0;class#GameInfo#0;class#GameTable#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/reading.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="30" selection-start="888" selection-end="888" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/model/Reading.java">
+    <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/TelephoneGameActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="13" selection-start="51" selection-end="51" vertical-scroll-proportion="0.06944445">
+        <state line="20" column="67" selection-start="632" selection-end="632" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/ViewGamesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="0" selection-start="1220" selection-end="1220" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/ReadingActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="36" selection-start="2340" selection-end="2340" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/jessitron/telgame/ReadingListActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="129" selection-start="1693" selection-end="1693" vertical-scroll-proportion="0.57908165">
           <folding />
         </state>
       </provider>

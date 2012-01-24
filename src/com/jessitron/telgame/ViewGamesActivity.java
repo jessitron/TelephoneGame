@@ -34,15 +34,10 @@ public class ViewGamesActivity extends ListActivity {
 
     }
 
-    // Questions. Does the cursor need to be on a db that stays open... how long?
-    // When does the cursor get closed? and when should we be closing the database?
-    // or does it matter so much for read queries?
-
-
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
 
-        Intent intent = new Intent(this, GameDetailActivity.class);
+        Intent intent = new Intent(this, ReadingListActivity.class);
         intent.putExtra(TelephoneGameActivity.EXTRA_GAME_ID, id);
 
         startActivity(intent);
