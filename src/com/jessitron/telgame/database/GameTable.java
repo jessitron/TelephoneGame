@@ -13,7 +13,7 @@ public class GameTable {
     public static final String ID = "_id";
     public static final String START_TIMESTAMP = "start_timestamp";
     public static final String STARTING_TEXT = "starting_text";
-    public static final String ENDING_TEXT = "ending_text";   // TODO: remove this column?
+    public static final String ENDING_TEXT = "ending_text";
     public static final String READING_COUNT = "countie";
 
     public static void onCreate(SQLiteDatabase db) {

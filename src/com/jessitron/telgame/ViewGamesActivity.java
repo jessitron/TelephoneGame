@@ -11,13 +11,15 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 public class ViewGamesActivity extends ListActivity {
+    private TelephoneGameOpenHelper dbHelper;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // set row layout
 
         // set cursor.
-        TelephoneGameOpenHelper dbHelper = new TelephoneGameOpenHelper(this);
+         dbHelper = new TelephoneGameOpenHelper(getApplicationContext());
         final Cursor c = GameTable.listGames(dbHelper.getReadableDatabase());
         startManagingCursor(c);
 
@@ -41,5 +43,11 @@ public class ViewGamesActivity extends ListActivity {
         intent.putExtra(TelephoneGameActivity.EXTRA_GAME_ID, id);
 
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dbHelper.close();
     }
 }
