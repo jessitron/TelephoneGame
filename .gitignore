@@ -1,6 +1,6 @@
-out
-gen
-.idea
+out/
+gen/
+.idea/
 *.iml
 *.iws
 *.ipr
