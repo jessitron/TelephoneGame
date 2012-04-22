@@ -1,53 +1,47 @@
 package com.jessitron.telgame;
 
-import com.jessitron.telgame.database.GameTable;
-import com.jessitron.telgame.database.TelephoneGameOpenHelper;
-import android.app.ListActivity;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
+import android.widget.SimpleAdapter;
 
-public class ViewGamesActivity extends ListActivity {
-    private TelephoneGameOpenHelper dbHelper;
+import com.j256.ormlite.dao.Dao;
+import com.jessitron.telgame.data.GameInfo;
+import com.jessitron.telgame.database.DatabaseManager;
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+public class ViewGamesActivity extends CustomListActivity {
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        // set row layout
+		Dao<GameInfo, Integer> gameInfoDao = DatabaseManager.getInstance().getDao(GameInfo.class);
 
-        // set cursor.
-         dbHelper = new TelephoneGameOpenHelper(getApplicationContext());
-        final Cursor c = GameTable.listGames(dbHelper.getReadableDatabase());
-        startManagingCursor(c);
+		List<GameInfo> allGames = new ArrayList<GameInfo>();
+		try {
+			allGames.addAll(gameInfoDao.queryForAll());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-        setListAdapter(new SimpleCursorAdapter(this, R.layout.game_row, c,
-                new String[]{GameTable.START_TIMESTAMP,
-                        GameTable.STARTING_TEXT,
-                        GameTable.READING_COUNT,
-                        GameTable.ENDING_TEXT},
-                new int[]{R.id.datetime,
-                        R.id.startingText,
-                        R.id.numberOfReadings,
-                R.id.endingText}
-        ));
+		SimpleAdapter simpleAdapter = new SimpleAdapter(this, convertItemsToMap(GameInfo.class, allGames),
+				R.layout.game_row, new String[] { "getStartTimestamp", "getStartingText", "getReadingCount",
+						"getEndingText" }, new int[] { R.id.datetime, R.id.startingText, R.id.numberOfReadings,
+						R.id.endingText });
 
-    }
+		setListAdapter(simpleAdapter);
 
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
+	}
 
-        Intent intent = new Intent(this, ReadingListActivity.class);
-        intent.putExtra(TelephoneGameActivity.EXTRA_GAME_ID, id);
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		Intent intent = new Intent(this, ReadingListActivity.class);
+		intent.putExtra(TelephoneGameActivity.EXTRA_GAME_ID, id + 1);
 
-        startActivity(intent);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        dbHelper.close();
-    }
+		startActivity(intent);
+	}
 }
