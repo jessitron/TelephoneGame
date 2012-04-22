@@ -1,6 +1,7 @@
 out/
 gen/
 .idea/
+bin/
 *.iml
 *.iws
 *.ipr

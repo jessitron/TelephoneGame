@@ -1,54 +1,53 @@
 package com.jessitron.telgame;
 
-import com.jessitron.telgame.database.GameTable;
-import com.jessitron.telgame.database.ReadingTable;
-import com.jessitron.telgame.database.TelephoneGameOpenHelper;
-import android.app.ListActivity;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
-import android.widget.SimpleCursorAdapter;
+import android.util.Log;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-public class ReadingListActivity extends ListActivity {
-    TelephoneGameOpenHelper openHelper;
+import com.j256.ormlite.dao.Dao;
+import com.jessitron.telgame.data.GameInfo;
+import com.jessitron.telgame.data.Reading;
+import com.jessitron.telgame.database.DatabaseManager;
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.reading_list);
+public class ReadingListActivity extends CustomListActivity {
+	private DatabaseManager databaseManager;
 
-        final long gameId = getIntent().getLongExtra(TelephoneGameActivity.EXTRA_GAME_ID, -1);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.reading_list);
 
-        populateHeaderFields(gameId);
+		databaseManager = DatabaseManager.getInstance();
+		Dao<Reading, Integer> readingsDao = databaseManager.getDao(Reading.class);
 
-        Cursor c = ReadingTable.findReadingsForGame(gameId, getDatabase());
-        startManagingCursor(c);
+		final long gameId = getIntent().getLongExtra(TelephoneGameActivity.EXTRA_GAME_ID, -1);
 
-        setListAdapter(new SimpleCursorAdapter(this, R.layout.reading_row,
-                c,
-                new String[]{ReadingTable.ENDING_TEXT},
-                new int[]{R.id.endingText2}));
+		List<Reading> readingsForGame = new ArrayList<Reading>();
+		try {
+			populateHeaderFields(gameId);
 
-    }
+			readingsForGame.addAll(readingsDao.queryForEq("gameId", gameId));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-    private void populateHeaderFields(long gameId) {
-        final GameTable.GameInfo gameInfo = GameTable.retrieveGameInfo(gameId, getDatabase());
-        ( (TextView) findViewById(R.id.desc)).setText("Game " + gameId + " at " + gameInfo.getStartTimestamp());
-        ( (TextView) findViewById(R.id.startingText)).setText(gameInfo.getStartingText());
-    }
+		Log.e("DB", "Found: " + readingsForGame.size() + " items");
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (openHelper != null) {
-            openHelper.close();
-        }
-    }
+		SimpleAdapter simpleAdapter = new SimpleAdapter(this, convertItemsToMap(Reading.class, readingsForGame),
+				R.layout.reading_row, new String[] { "getEndingText" }, new int[] { R.id.endingText2 });
 
-    public SQLiteDatabase getDatabase() {
-        if (openHelper == null) {
-            openHelper = new TelephoneGameOpenHelper(this);
-        }
-        return openHelper.getReadableDatabase();
-    }
+		setListAdapter(simpleAdapter);
+	}
+
+	private void populateHeaderFields(long gameId) throws SQLException {
+		GameInfo gameInfo = databaseManager.getDao(GameInfo.class).queryForEq("gameId", gameId).get(0);
+
+		((TextView) findViewById(R.id.desc)).setText("Game " + gameId + " at " + gameInfo.getStartTimestamp());
+		((TextView) findViewById(R.id.startingText)).setText(gameInfo.getStartingText());
+	}
 }
