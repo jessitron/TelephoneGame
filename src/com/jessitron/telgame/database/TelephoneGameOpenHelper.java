@@ -12,18 +12,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Environment;
-import android.util.Log;
-import android.widget.Toast;
-
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.jessitron.telgame.data.GameInfo;
 import com.jessitron.telgame.data.Reading;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
 
 class TelephoneGameOpenHelper extends OrmLiteSqliteOpenHelper {
 	public static final int VERSION = 2;
@@ -73,7 +73,7 @@ class TelephoneGameOpenHelper extends OrmLiteSqliteOpenHelper {
 	public <T extends Object> Dao<T, Integer> getDaoFor(Class<T> clazz) {
 		if (cachedDaoMap.get(clazz) == null) {
 			try {
-				Dao<Class<?>, Integer> dao = super.getDao(clazz);
+				Dao dao = super.getDao(clazz);
 				cachedDaoMap.put(clazz, dao);
 			} catch (java.sql.SQLException e) {
 				e.printStackTrace();
