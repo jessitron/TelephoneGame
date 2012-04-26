@@ -2,6 +2,7 @@ package com.jessitron.telgame;
 
 import com.jessitron.telgame.database.GameTable;
 import com.jessitron.telgame.database.TelephoneGameOpenHelper;
+
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -19,7 +20,7 @@ public class ViewGamesActivity extends ListActivity {
         // set row layout
 
         // set cursor.
-         dbHelper = new TelephoneGameOpenHelper(getApplicationContext());
+        dbHelper = new TelephoneGameOpenHelper(getApplicationContext());
         final Cursor c = GameTable.listGames(dbHelper.getReadableDatabase());
         startManagingCursor(c);
 
@@ -31,7 +32,7 @@ public class ViewGamesActivity extends ListActivity {
                 new int[]{R.id.datetime,
                         R.id.startingText,
                         R.id.numberOfReadings,
-                R.id.endingText}
+                        R.id.endingText}
         ));
 
     }
