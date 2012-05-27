@@ -2,7 +2,9 @@ package com.jessitron.telgame;
 
 import java.util.ArrayList;
 
-import com.jessitron.telgame.database.ReadingTable;
+import java.util.Date;
+
+import com.jessitron.telephonegame.dao.Reading;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -112,7 +114,7 @@ public class ReadingActivity extends Activity {
             pleaseTryAgain();
         } else {
             this.heard = result;
-            ReadingTable.insertNewReading(gameId, prompt, heard, this);  // TODO: move to async task
+            insertReadingRecord();
             startNextReadingActivity();
         }
     }
@@ -125,6 +127,11 @@ public class ReadingActivity extends Activity {
         readingIntent.putExtra(EXTRA_SAME_COUNT, prompt.equals(heard) ? sameCount + 1 : 0) ;
         startActivity(readingIntent);
         finish();
+    }
+
+    private void insertReadingRecord() {
+        final long insertResult = ((TelephoneGameApplication) getApplicationContext()).getDBSession().getReadingDao().insert(new Reading(1l, gameId, new Date(), prompt, heard));
+        Log.d("jessiTRON", "result of insert: " + insertResult);
     }
 
     private String selectResult(ArrayList<String> resultList) {

@@ -1,17 +1,19 @@
 package com.jessitron.telgame;
 
-import com.jessitron.telgame.database.GameTable;
-import com.jessitron.telgame.database.ReadingTable;
-import com.jessitron.telgame.database.TelephoneGameOpenHelper;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.jessitron.telephonegame.dao.Game;
+import com.jessitron.telephonegame.dao.Reading;
+
 import android.app.ListActivity;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.SimpleCursorAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class ReadingListActivity extends ListActivity {
-    TelephoneGameOpenHelper openHelper;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,36 +21,36 @@ public class ReadingListActivity extends ListActivity {
 
         final long gameId = getIntent().getLongExtra(TelephoneGameActivity.EXTRA_GAME_ID, -1);
 
-        populateHeaderFields(gameId);
 
-        Cursor c = ReadingTable.findReadingsForGame(gameId, getDatabase());
-        startManagingCursor(c);
+        final Game game = ((TelephoneGameApplication) getApplicationContext()).getDBSession().getGameDao().load(gameId);
+        populateHeaderFields(game);
+        final List<Reading> readingList = game.getReadingList();
 
-        setListAdapter(new SimpleCursorAdapter(this, R.layout.reading_row,
-                c,
-                new String[]{ReadingTable.ENDING_TEXT},
+        setListAdapter(new SimpleAdapter(this, convertItemsToMap(readingList), R.layout.reading_row,
+                new String[]{"endingText"},
                 new int[]{R.id.endingText2}));
 
     }
 
-    private void populateHeaderFields(long gameId) {
-        final GameTable.GameInfo gameInfo = GameTable.retrieveGameInfo(gameId, getDatabase());
-        ( (TextView) findViewById(R.id.desc)).setText("Game " + gameId + " at " + gameInfo.getStartTimestamp());
-        ( (TextView) findViewById(R.id.startingText)).setText(gameInfo.getStartingText());
+    private void populateHeaderFields(Game game) {
+        ( (TextView) findViewById(R.id.desc)).setText("Game " + game.getId() + " at " + game.getStartTimestamp());
+        ( (TextView) findViewById(R.id.startingText)).setText(game.getStartingText());
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (openHelper != null) {
-            openHelper.close();
+    protected List<? extends Map<String, ?>> convertItemsToMap(List<Reading> allReadings) {
+        List<Map<String, ?>> itemMapList = new ArrayList<Map<String, ?>>();
+        for (Reading reading : allReadings) {
+            itemMapList.add(mapObjectToFields(reading));
         }
+
+        return itemMapList;
     }
 
-    public SQLiteDatabase getDatabase() {
-        if (openHelper == null) {
-            openHelper = new TelephoneGameOpenHelper(this);
-        }
-        return openHelper.getReadableDatabase();
+    private Map<String, Object> mapObjectToFields(Reading object) {
+        Map<String, Object> nameToValueMap = new HashMap<String, Object>();
+
+        nameToValueMap.put("endingText", object.getEndingText());
+
+        return nameToValueMap;
     }
 }

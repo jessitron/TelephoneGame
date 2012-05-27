@@ -1,7 +1,10 @@
 package com.jessitron.telgame;
 
-import com.jessitron.telgame.database.GameTable;
-import com.jessitron.telgame.database.TelephoneGameOpenHelper;
+import java.util.Date;
+
+import com.jessitron.telephonegame.dao.Game;
+import com.jessitron.telephonegame.dao.GameDao;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TelephoneGameActivity extends Activity
 {
@@ -34,7 +38,7 @@ public class TelephoneGameActivity extends Activity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.backupMenuItem:
-                new TelephoneGameOpenHelper(this).backupToSDCard();  // TODO: don't instantiate. Make it static
+                Toast.makeText(this, "Sorry - not implemented in greenDAO version", Toast.LENGTH_LONG).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -44,15 +48,17 @@ public class TelephoneGameActivity extends Activity
     public void startGame(View view) {
         // TODO: validate the starting text
          // create a game
-        final String startingText = getStartingText();
-        long gameId = GameTable.insertNewGame(startingText, this);
-        Log.d(LOG_PREFIX, "Starting new game with <" + startingText + ">");
+        Game newGame = new Game(System.currentTimeMillis(), getStartingText(), null, new Date());
+        final GameDao gameDao = ((TelephoneGameApplication) getApplicationContext()).getDBSession().getGameDao();
+        final long newId = gameDao.insert(newGame);
+        Log.d(LOG_PREFIX, "Starting new game with id <" + newId + ">");
         
         // start the reading activity with the starting text.
         Intent readingIntent = new Intent(this, ReadingActivity.class);
-        readingIntent.putExtra(Intent.EXTRA_TEXT, startingText);
-        readingIntent.putExtra(EXTRA_GAME_ID, gameId) ;
+        readingIntent.putExtra(Intent.EXTRA_TEXT, getStartingText());
+        readingIntent.putExtra(EXTRA_GAME_ID, newId) ;
         startActivity(readingIntent);
+        finish();
     }
 
 

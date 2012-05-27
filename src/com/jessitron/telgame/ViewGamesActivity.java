@@ -1,18 +1,21 @@
 package com.jessitron.telgame;
 
-import com.jessitron.telgame.database.GameTable;
-import com.jessitron.telgame.database.TelephoneGameOpenHelper;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.jessitron.telephonegame.dao.DaoSession;
+import com.jessitron.telephonegame.dao.Game;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
+import android.widget.SimpleAdapter;
 
 public class ViewGamesActivity extends ListActivity {
-    private TelephoneGameOpenHelper dbHelper;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,22 +23,29 @@ public class ViewGamesActivity extends ListActivity {
         // set row layout
 
         // set cursor.
-        dbHelper = new TelephoneGameOpenHelper(getApplicationContext());
-        final Cursor c = GameTable.listGames(dbHelper.getReadableDatabase());
-        startManagingCursor(c);
+        final DaoSession dbSession = ((TelephoneGameApplication) getApplicationContext()).getDBSession();
+        final List<Game> games = dbSession.getGameDao().loadAll();
 
-        setListAdapter(new SimpleCursorAdapter(this, R.layout.game_row, c,
-                new String[]{GameTable.START_TIMESTAMP,
-                        GameTable.STARTING_TEXT,
-                        GameTable.READING_COUNT,
-                        GameTable.ENDING_TEXT},
-                new int[]{R.id.datetime,
-                        R.id.startingText,
-                        R.id.numberOfReadings,
-                        R.id.endingText}
-        ));
+        // DANGIT! Why won't greenDAO give me the simpleCursorAdapter? arg
 
+        setListAdapter(new SimpleAdapter(this, convertItemsToMap( games),
+                R.layout.game_row,
+                new String[]{
+                        "startTimestamp",
+                        "startingText",
+                        "readingCount",
+                        "endingText"
+
+                }, new int[]    {
+        R.id.datetime,
+                R.id.startingText,
+                R.id.numberOfReadings,
+                R.id.endingText
     }
+
+    ));
+
+}
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -49,6 +59,25 @@ public class ViewGamesActivity extends ListActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        dbHelper.close();
+    }
+
+    protected List<? extends Map<String, ?>> convertItemsToMap(List<Game> allGames) {
+        List<Map<String, ?>> itemMapList = new ArrayList<Map<String, ?>>();
+        for (Game game : allGames) {
+            itemMapList.add(mapObjectToFields(game));
+        }
+
+        return itemMapList;
+    }
+
+    private Map<String, Object> mapObjectToFields(Game object) {
+        Map<String, Object> nameToValueMap = new HashMap<String, Object>();
+
+        nameToValueMap.put("startTimestamp", object.getStartTimestamp());
+        nameToValueMap.put("startingText", object.getStartingText());
+        nameToValueMap.put("readingCount", object.getReadingList().size());
+        nameToValueMap.put("endingText", object.getEndingText());
+
+        return nameToValueMap;
     }
 }
