@@ -3,6 +3,9 @@ greenDAO observations so far:
  - no option for default timestamp
  - doesn't create key with autoincrement, and requires ID for instantiation! like I care what the ID is!
  - will not give me a cursor to create the simpleCursorAdapter
+ - there is trickiness in one-to-manies, getting the list updated correctly in the session
+
  - there is a queryBuilder that lets you add sorts, joins, where clauses, abstracted from SQL
+ - transactions take place in Runnables or Callables, obtained from the session
 
  Big Q: how the fuck am I supposed to know the next game ID?

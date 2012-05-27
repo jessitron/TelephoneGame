@@ -1,9 +1,10 @@
 package com.jessitron.telgame;
 
 import java.util.ArrayList;
-
 import java.util.Date;
 
+import com.jessitron.telephonegame.dao.DaoSession;
+import com.jessitron.telephonegame.dao.Game;
 import com.jessitron.telephonegame.dao.Reading;
 
 import android.app.Activity;
@@ -48,14 +49,14 @@ public class ReadingActivity extends Activity {
     }
 
     private void adjustInstruction() {
-       String instructions = "Push the button and then read the text to the device.";
-        if (prompt.length() < 10  || !prompt.contains(" "))     {
+        String instructions = "Push the button and then read the text to the device.";
+        if (prompt.length() < 10 || !prompt.contains(" ")) {
             instructions += " (Please embellish.)";
         }
-        if (sameCount > 1)  {
+        if (sameCount > 1) {
             instructions += " Use a funny voice.";
         }
-       instructionView.setText(instructions);
+        instructionView.setText(instructions);
     }
 
     private void validateInput() {
@@ -78,13 +79,13 @@ public class ReadingActivity extends Activity {
             toast("Your device does not support speech recognition. Poop'n'scoop.");
         }
     }
-    
+
     public void endGame(View v) {
         Intent intent = new Intent(this, ReadingListActivity.class);
         intent.putExtra(TelephoneGameActivity.EXTRA_GAME_ID, gameId);
 
         startActivity(intent);
-        
+
         finish();
     }
 
@@ -123,15 +124,25 @@ public class ReadingActivity extends Activity {
     private void startNextReadingActivity() {
         Intent readingIntent = new Intent(this, ReadingActivity.class);
         readingIntent.putExtra(Intent.EXTRA_TEXT, heard);
-        readingIntent.putExtra(TelephoneGameActivity.EXTRA_GAME_ID, gameId) ;
-        readingIntent.putExtra(EXTRA_SAME_COUNT, prompt.equals(heard) ? sameCount + 1 : 0) ;
+        readingIntent.putExtra(TelephoneGameActivity.EXTRA_GAME_ID, gameId);
+        readingIntent.putExtra(EXTRA_SAME_COUNT, prompt.equals(heard) ? sameCount + 1 : 0);
         startActivity(readingIntent);
         finish();
     }
 
     private void insertReadingRecord() {
-        final long insertResult = ((TelephoneGameApplication) getApplicationContext()).getDBSession().getReadingDao().insert(new Reading(1l, gameId, new Date(), prompt, heard));
-        Log.d("jessiTRON", "result of insert: " + insertResult);
+        final DaoSession dbSession = ((TelephoneGameApplication) getApplicationContext()).getDBSession();
+        dbSession.runInTx(new Runnable() {
+            @Override
+            public void run() {
+                // TODO: there is a way to get the game to have an updated reading list and this isn't it
+                final long insertResult = dbSession.insert(new Reading(System.currentTimeMillis(), gameId, new Date(), prompt, heard));
+                final Game game = dbSession.load(Game.class, gameId);
+                game.setEndingText(heard);
+                dbSession.update(game);
+            }
+        });
+        Log.d("jessiTRON","debug point here");
     }
 
     private String selectResult(ArrayList<String> resultList) {

@@ -1,6 +1,7 @@
 package com.jessitron.telgame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ public class ViewGamesActivity extends ListActivity {
         // set cursor.
         final DaoSession dbSession = ((TelephoneGameApplication) getApplicationContext()).getDBSession();
         final List<Game> games = dbSession.getGameDao().loadAll();
+        Collections.reverse(games);
 
         // DANGIT! Why won't greenDAO give me the simpleCursorAdapter? arg
 
