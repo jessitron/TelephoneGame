@@ -1,0 +1,3 @@
+/data/data/com.jessitron.telgame/databases/
+adb pull /data/data/com.jessitron.telgame/databases/TELEPHONEGAME
+adb push TELEPHONEGAME /data/data/com.jessitron.telgame/databases/TELEPHONEGAME
