@@ -1,7 +1,9 @@
 package com.jessitron.telgame;
 
 import java.util.ArrayList;
+
 import com.jessitron.telgame.database.ReadingTable;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -13,12 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ReadingActivity extends Activity {
+    private static final int LISTEN_CODE = 42;
+    private static final String EXTRA_SAME_COUNT = "SAME_COUNT";
+
     private String prompt;
     private long gameId;
-    private TextView promptView ;
     private TextView instructionView;
-    
+
     private int sameCount = 0;
+    private static final String NO_RESULT = "ain't got nuthin";
+    private String heard;
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -28,23 +34,24 @@ public class ReadingActivity extends Activity {
         instructionView = ((TextView) findViewById(R.id.instructions));
 
         setPrompt(getIntent().getStringExtra(Intent.EXTRA_TEXT));
+        sameCount = getIntent().getIntExtra(EXTRA_SAME_COUNT, 0);
         gameId = getIntent().getLongExtra(TelephoneGameActivity.EXTRA_GAME_ID, -1);
         validateInput();
+        adjustInstruction();
 
     }
 
     private void setPrompt(String input) {
         prompt = input;
-        adjustInstruction(input);
     }
 
-    private void adjustInstruction(String input) {
+    private void adjustInstruction() {
        String instructions = "Push the button and then read the text to the device.";
-        if (input.length() < 10  || !input.contains(" "))     {
+        if (prompt.length() < 10  || !prompt.contains(" "))     {
             instructions += " (Please embellish.)";
         }
         if (sameCount > 1)  {
-            instructions += " Use a funny accent.";
+            instructions += " Use a funny voice.";
         }
        instructionView.setText(instructions);
     }
@@ -64,7 +71,7 @@ public class ReadingActivity extends Activity {
         speechToTextIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, prompt);
 
         try {
-            startActivityForResult(speechToTextIntent, 4);
+            startActivityForResult(speechToTextIntent, LISTEN_CODE);
         } catch (ActivityNotFoundException e) {
             toast("Your device does not support speech recognition. Poop'n'scoop.");
         }
@@ -86,38 +93,44 @@ public class ReadingActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case 4:
+            case LISTEN_CODE:
                 Log.d(TelephoneGameActivity.LOG_PREFIX, "result code: " + resultCode);
                 if (resultCode == RESULT_OK) {
-                    dealWithResult(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS));
+                    dealWithResult(selectResult(data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)));
                 } else {
                     dealWithFailure();
                 }
                 break;
+
             default:
                 super.onActivityResult(requestCode, resultCode, data);    //To change body of overridden methods use File | Settings | File Templates.
         }
     }
 
-    private void dealWithResult(ArrayList<String> resultList) {
-        if (resultList.size() == 0) {
-             toast("Nothing in results!");
-        }  else {
-            final String result = selectResult(resultList);
-            measureSameness(prompt, result);
-            ReadingTable.insertNewReading(gameId, prompt, result, this);  // TODO: move to async task
-            setPrompt(result);
+    private void dealWithResult(String result) {
+        if (NO_RESULT.equals(result)) {
+            pleaseTryAgain();
+        } else {
+            this.heard = result;
+            ReadingTable.insertNewReading(gameId, prompt, heard, this);  // TODO: move to async task
+            startNextReadingActivity();
         }
     }
 
-    private void measureSameness(String prompt, String result) {
-        if (prompt.equals(result)) {
-            sameCount++;
-        }
-        else sameCount = 0;
+
+    private void startNextReadingActivity() {
+        Intent readingIntent = new Intent(this, ReadingActivity.class);
+        readingIntent.putExtra(Intent.EXTRA_TEXT, heard);
+        readingIntent.putExtra(TelephoneGameActivity.EXTRA_GAME_ID, gameId) ;
+        readingIntent.putExtra(EXTRA_SAME_COUNT, prompt.equals(heard) ? sameCount + 1 : 0) ;
+        startActivity(readingIntent);
+        finish();
     }
 
     private String selectResult(ArrayList<String> resultList) {
+        if (resultList.size() == 0) {
+            return NO_RESULT;
+        }
         // man, I wish I was in a functional language right about now.
         String longestResult = "";
         for (String s : resultList) {
@@ -130,6 +143,13 @@ public class ReadingActivity extends Activity {
     }
 
     private void dealWithFailure() {
-        // TODO
+        pleaseTryAgain();
+
+        // TODO: how to know whether I'm on the emulator? man, I wish this flight had internet
+        dealWithResult(prompt + " banana");
+    }
+
+    private void pleaseTryAgain() {
+        Toast.makeText(this, "Nothing recorded. Please try again", Toast.LENGTH_SHORT).show();
     }
 }
