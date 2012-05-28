@@ -9,4 +9,3 @@ greenDAO observations so far:
  - transactions take place in Runnables or Callables, obtained from the session
  - joins are lazy-loaded by default but can be triggered as eager, in which case they use one SQL statement
 
- Big Q: how the fuck am I supposed to know the next game ID?

@@ -58,7 +58,6 @@ public class TelephoneGameActivity extends Activity
         readingIntent.putExtra(Intent.EXTRA_TEXT, getStartingText());
         readingIntent.putExtra(EXTRA_GAME_ID, newId) ;
         startActivity(readingIntent);
-        finish();
     }
 
 
