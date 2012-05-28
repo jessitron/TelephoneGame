@@ -34,7 +34,7 @@ public class TelephoneGameActivity extends Activity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.backupMenuItem:
-                new TelephoneGameOpenHelper(this).backupToSDCard();  // TODO: don't instantiate. Make it static
+                TelephoneGameOpenHelper.backupToSDCard((TelephoneGameApplication) getApplicationContext());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -45,7 +45,7 @@ public class TelephoneGameActivity extends Activity
         // TODO: validate the starting text
          // create a game
         final String startingText = getStartingText();
-        long gameId = GameTable.insertNewGame(startingText, this);
+        long gameId = GameTable.insertNewGame(startingText, (TelephoneGameApplication) getApplicationContext());
         Log.d(LOG_PREFIX, "Starting new game with <" + startingText + ">");
         
         // start the reading activity with the starting text.

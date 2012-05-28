@@ -112,7 +112,7 @@ public class ReadingActivity extends Activity {
             pleaseTryAgain();
         } else {
             this.heard = result;
-            ReadingTable.insertNewReading(gameId, prompt, heard, this);  // TODO: move to async task
+            ReadingTable.insertNewReading(gameId, prompt, heard, ((TelephoneGameApplication) getApplicationContext()));  // TODO: move to async task
             startNextReadingActivity();
         }
     }

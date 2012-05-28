@@ -1,8 +1,9 @@
 package com.jessitron.telgame.database;
 
 import com.jessitron.telgame.TelephoneGameActivity;
+import com.jessitron.telgame.TelephoneGameApplication;
+
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -24,24 +25,18 @@ public class ReadingTable {
                 ENDING_TEXT + " text not null)");
     }
 
-    public static long insertNewReading(long gameId, String startingText, String endingText, Context context) {
+    public static long insertNewReading(long gameId, String startingText, String endingText, TelephoneGameApplication context) {
         // This should happen on an asynchronous task
 
-        final TelephoneGameOpenHelper openHelper = new TelephoneGameOpenHelper(context);
-
         long id;
-        try {
-            ContentValues cv = new ContentValues();
-            cv.put(GAME_ID, gameId);
-            cv.put(STARTING_TEXT, startingText);
-            cv.put(ENDING_TEXT, endingText);
+        ContentValues cv = new ContentValues();
+        cv.put(GAME_ID, gameId);
+        cv.put(STARTING_TEXT, startingText);
+        cv.put(ENDING_TEXT, endingText);
 
-            id = openHelper.getWritableDatabase().insert(TABLE_NAME, null, cv);
+        id = context.getWritableDatabase().insert(TABLE_NAME, null, cv);
 
-            Log.d(TelephoneGameActivity.LOG_PREFIX, "Created new reading with ID: " + id);
-        } finally {
-            openHelper.close();
-        }
+        Log.d(TelephoneGameActivity.LOG_PREFIX, "Created new reading with ID: " + id);
 
         return id;
     }

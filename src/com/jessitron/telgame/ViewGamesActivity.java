@@ -1,18 +1,17 @@
 package com.jessitron.telgame;
 
 import com.jessitron.telgame.database.GameTable;
-import com.jessitron.telgame.database.TelephoneGameOpenHelper;
 
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 public class ViewGamesActivity extends ListActivity {
-    private TelephoneGameOpenHelper dbHelper;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +19,8 @@ public class ViewGamesActivity extends ListActivity {
         // set row layout
 
         // set cursor.
-        dbHelper = new TelephoneGameOpenHelper(getApplicationContext());
-        final Cursor c = GameTable.listGames(dbHelper.getReadableDatabase());
+        final SQLiteDatabase db = ((TelephoneGameApplication) getApplicationContext()).getWritableDatabase();
+        final Cursor c = GameTable.listGames(db);
         startManagingCursor(c);
 
         setListAdapter(new SimpleCursorAdapter(this, R.layout.game_row, c,
@@ -44,11 +43,5 @@ public class ViewGamesActivity extends ListActivity {
         intent.putExtra(TelephoneGameActivity.EXTRA_GAME_ID, id);
 
         startActivity(intent);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        dbHelper.close();
     }
 }

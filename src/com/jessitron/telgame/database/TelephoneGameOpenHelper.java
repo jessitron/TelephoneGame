@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import com.jessitron.telgame.TelephoneGameActivity;
+import com.jessitron.telgame.TelephoneGameApplication;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -53,8 +55,9 @@ public class TelephoneGameOpenHelper extends SQLiteOpenHelper {
         cursor.close();
     }
 
-    public void backupToSDCard() {
-        close();
+    public static void backupToSDCard(TelephoneGameApplication application) {
+        application.getWritableDatabase().close();
+
         // http://stackoverflow.com/questions/1995320/how-to-backup-database-file-to-sdcard-on-android
         File sd = Environment.getExternalStorageDirectory();
         File data = Environment.getDataDirectory();
@@ -87,13 +90,14 @@ public class TelephoneGameOpenHelper extends SQLiteOpenHelper {
                     } catch (Exception e) {
                     }
                 }
-                Toast.makeText(context, "Successfully backed up to " + backupDB.getAbsolutePath(), Toast.LENGTH_LONG).show();    // TODO: doesn't work
+                Toast.makeText(application, "Successfully backed up to " + backupDB.getAbsolutePath(), Toast.LENGTH_LONG).show();
             } else {
                 Log.e(LOG_PREFIX, "Unable to find current database at: "+ currentDB.getAbsolutePath());
             }
         } else {
             Log.e(LOG_PREFIX, "Unable to back up - card not available")  ;
-            Toast.makeText(context, "SD card not available", Toast.LENGTH_LONG).show();
+            Toast.makeText(application, "SD card not available", Toast.LENGTH_LONG).show();
         }
+        application.initializeDB();
     }
 }

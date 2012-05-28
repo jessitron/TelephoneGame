@@ -1,8 +1,9 @@
 package com.jessitron.telgame.database;
 
 import com.jessitron.telgame.TelephoneGameActivity;
+import com.jessitron.telgame.TelephoneGameApplication;
+
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -23,37 +24,31 @@ public class GameTable {
                 " " + ENDING_TEXT + " text )");
     }
 
-    public static long insertNewGame(String startingText, Context context) {
-
-        final TelephoneGameOpenHelper openHelper = new TelephoneGameOpenHelper(context);
+    public static long insertNewGame(String startingText, TelephoneGameApplication context) {
 
         long id;
+        ContentValues cv = new ContentValues();
+        cv.put(STARTING_TEXT, startingText);
+
+        final SQLiteDatabase db = context.getWritableDatabase();
+        db.beginTransaction();
         try {
-            ContentValues cv = new ContentValues();
-            cv.put(STARTING_TEXT, startingText);
-
-            final SQLiteDatabase db = openHelper.getWritableDatabase();
-            db.beginTransaction();
-            try {
-                id = db.insert(TABLE_NAME, null, cv);
-                db.setTransactionSuccessful();
-            } finally {
-                db.endTransaction();
-            }
-
-            Log.d(TelephoneGameActivity.LOG_PREFIX, "Created new game with ID: " + id);
+            id = db.insert(TABLE_NAME, null, cv);
+            db.setTransactionSuccessful();
         } finally {
-            openHelper.close();
+            db.endTransaction();
         }
+
+        Log.d(TelephoneGameActivity.LOG_PREFIX, "Created new game with ID: " + id);
 
         return id;
     }
-    
+
 
     public static GameInfo retrieveGameInfo(long gameId, SQLiteDatabase db) {
-        final Cursor cursor = db.query(TABLE_NAME, new String[] {ID, START_TIMESTAMP, STARTING_TEXT}, 
-                ID + " = :id", new String[] {"" + gameId}, null, null, null);
-        if (!cursor.moveToFirst())  {
+        final Cursor cursor = db.query(TABLE_NAME, new String[]{ID, START_TIMESTAMP, STARTING_TEXT},
+                ID + " = :id", new String[]{"" + gameId}, null, null, null);
+        if (!cursor.moveToFirst()) {
             throw new IllegalArgumentException("Unable to retrieve info for game " + gameId);
         }
         return new GameInfo(cursor.getLong(0), cursor.getString(1), cursor.getString(2));
@@ -78,7 +73,7 @@ public class GameTable {
         private final String startingText;
         private final long gameId;
 
-        private GameInfo(long gameId,  String startTimestamp, String startingText) {
+        private GameInfo(long gameId, String startTimestamp, String startingText) {
             this.gameId = gameId;
             this.startingText = startingText;
             this.startTimestamp = startTimestamp;
