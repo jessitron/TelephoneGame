@@ -2,6 +2,7 @@ ormlite-*.jar
 out/
 gen/
 .idea/
+*.swp
 *.iml
 *.iws
 *.ipr

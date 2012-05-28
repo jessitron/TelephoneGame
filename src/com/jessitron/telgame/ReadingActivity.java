@@ -135,9 +135,10 @@ public class ReadingActivity extends Activity {
         dbSession.runInTx(new Runnable() {
             @Override
             public void run() {
-                // TODO: there is a way to get the game to have an updated reading list and this isn't it
-                final long insertResult = dbSession.insert(new Reading(System.currentTimeMillis(), gameId, new Date(), prompt, heard));
+                dbSession.insert(new Reading(null, gameId, new Date(), prompt, heard));
+
                 final Game game = dbSession.load(Game.class, gameId);
+                game.resetReadingList();
                 game.setEndingText(heard);
                 dbSession.update(game);
             }
@@ -161,10 +162,13 @@ public class ReadingActivity extends Activity {
     }
 
     private void dealWithFailure() {
-        pleaseTryAgain();
+        if ("google_sdk".equals(android.os.Build.PRODUCT)) { // emulator doesn't have speech-to-text
+            dealWithResult(prompt + " banana");
+            return;
+        }
 
-        // TODO: how to know whether I'm on the emulator? man, I wish this flight had internet
-        dealWithResult(prompt + " banana");
+        //real code
+        pleaseTryAgain();
     }
 
     private void pleaseTryAgain() {

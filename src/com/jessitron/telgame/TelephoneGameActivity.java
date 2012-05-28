@@ -48,7 +48,7 @@ public class TelephoneGameActivity extends Activity
     public void startGame(View view) {
         // TODO: validate the starting text
          // create a game
-        Game newGame = new Game(System.currentTimeMillis(), getStartingText(), null, new Date());
+        Game newGame = new Game(null, getStartingText(), null, new Date());
         final GameDao gameDao = ((TelephoneGameApplication) getApplicationContext()).getDBSession().getGameDao();
         final long newId = gameDao.insert(newGame);
         Log.d(LOG_PREFIX, "Starting new game with id <" + newId + ">");
@@ -67,7 +67,7 @@ public class TelephoneGameActivity extends Activity
     }
     
     public void viewPastGames(View v) {
-        startActivity(new Intent(this, ViewGamesActivity.class));
+        startActivity(new Intent(this, GameListActivity.class));
     }
 
 }
