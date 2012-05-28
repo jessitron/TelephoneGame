@@ -1,4 +1,5 @@
 ormlite-*.jar
+*.swp
 out/
 gen/
 .idea/
