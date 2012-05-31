@@ -1,7 +1,7 @@
 package com.jessitron.telgame;
 
 import com.jessitron.telgame.database.GameTable;
-import com.jessitron.telgame.database.TelephoneGameOpenHelper;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,7 +34,7 @@ public class TelephoneGameActivity extends Activity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.backupMenuItem:
-                TelephoneGameOpenHelper.backupToSDCard((TelephoneGameApplication) getApplicationContext());
+                ((TelephoneGameApplication) getApplicationContext()).backupToSDCard();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

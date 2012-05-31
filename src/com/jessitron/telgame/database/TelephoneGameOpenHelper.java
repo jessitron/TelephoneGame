@@ -55,49 +55,5 @@ public class TelephoneGameOpenHelper extends SQLiteOpenHelper {
         cursor.close();
     }
 
-    public static void backupToSDCard(TelephoneGameApplication application) {
-        application.getWritableDatabase().close();
 
-        // http://stackoverflow.com/questions/1995320/how-to-backup-database-file-to-sdcard-on-android
-        File sd = Environment.getExternalStorageDirectory();
-        File data = Environment.getDataDirectory();
-
-        if (sd.canWrite()) {
-            String currentDBPath = "data/com.jessitron.telgame/databases/" + DATABASE_NAME;
-            String backupDBPath = DATABASE_NAME;
-            File currentDB = new File(data, currentDBPath);
-            File backupDB = new File(sd, backupDBPath);
-            Log.i(LOG_PREFIX, "Backing up database to: " + backupDB.getAbsolutePath());
-
-            if (currentDB.exists()) {
-                if (backupDB.exists()) {
-                    Log.d(LOG_PREFIX, "Deleting old backup");
-                    backupDB.delete();
-                    backupDB =  new File(sd, backupDBPath);
-                }
-                FileChannel src = null;
-                FileChannel dst = null;
-                try {
-                    src = new FileInputStream(currentDB).getChannel();
-                    dst = new FileOutputStream(backupDB).getChannel();
-                    dst.transferFrom(src, 0, src.size());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                } finally {
-                    try {
-                        src.close();
-                        dst.close();
-                    } catch (Exception e) {
-                    }
-                }
-                Toast.makeText(application, "Successfully backed up to " + backupDB.getAbsolutePath(), Toast.LENGTH_LONG).show();
-            } else {
-                Log.e(LOG_PREFIX, "Unable to find current database at: "+ currentDB.getAbsolutePath());
-            }
-        } else {
-            Log.e(LOG_PREFIX, "Unable to back up - card not available")  ;
-            Toast.makeText(application, "SD card not available", Toast.LENGTH_LONG).show();
-        }
-        application.initializeDB();
-    }
 }

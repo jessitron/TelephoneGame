@@ -145,7 +145,7 @@ public class ReadingActivity extends Activity {
     private void dealWithFailure() {
         pleaseTryAgain();
 
-        // TODO: how to know whether I'm on the emulator? man, I wish this flight had internet
+        // For testing purposes
         dealWithResult(prompt + " banana");
     }
 
