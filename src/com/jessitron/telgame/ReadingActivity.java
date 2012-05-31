@@ -143,10 +143,11 @@ public class ReadingActivity extends Activity {
     }
 
     private void dealWithFailure() {
-        pleaseTryAgain();
+        Toast.makeText(this, "Nothing recorded. Adding something silly", Toast.LENGTH_SHORT).show();
+       // pleaseTryAgain();
 
         // For testing purposes
-        dealWithResult(prompt + " banana");
+        dealWithResult(prompt + " armadillo");
     }
 
     private void pleaseTryAgain() {
